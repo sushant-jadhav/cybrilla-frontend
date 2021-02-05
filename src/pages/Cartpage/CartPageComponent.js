@@ -54,7 +54,7 @@ class CartComponent extends Component {
                     title={'Cart'}
                 />
 
-                <Container>
+                {/*<Container>*/}
 
                     <Row>
                         <Col style={{marginTop:10,marginBottom:80}}>
@@ -63,28 +63,13 @@ class CartComponent extends Component {
                                     {/*<Prompt message={location =>location.pathname.includes("/ProductDetail")?  `Are you sure you want to view the details ?` : true  } />*/}
                                     <Card.Body>
                                         <Card.Title>
-                                            {data.title}
+                                            {data.product && data.product.title}
                                         </Card.Title>
                                         <Card.Text>
-                                            {data.description}
+                                            {data.product && data.product.description}
                                         </Card.Text>
-                                        {/*<Card.Title>{100}</Card.Title>*/}
+                                        <Card.Text>Quantity : <b>{data.quantity}</b></Card.Text>
                                         {/*<Link to={{pathname: "/ProductDetail",productName:{name : 'test'}}}>*/}
-                                        <div style={appStyle.home.counterInput}>
-                                            <CounterInput
-                                                value={data.quantity}
-                                                min={0}
-                                                max={10}
-                                                onChange={ (value) => { this.props.updateCounter({
-                                                    index:index,
-                                                    quantity:value
-                                                }) } }
-                                            />
-                                            <Button variant="primary" onClick={()=>{
-                                               this.props.addToCartProduct({product_id:data.product_id});
-                                            }}>Add</Button>
-                                        </div>
-
                                     </Card.Body>
 
                                 </Card>
@@ -104,9 +89,31 @@ class CartComponent extends Component {
                             </Alert>}
 
                         </Col>
+                        <Col>
+                            {
+                                <Card style={{margin:10}} className={'product-card'} key={0}>
+                                    {/*<Prompt message={location =>location.pathname.includes("/ProductDetail")?  `Are you sure you want to view the details ?` : true  } />*/}
+                                    <Card.Body>
+                                        <Card.Title>
+                                            Product Discount Details
+                                        </Card.Title>
+                                        <Card.Text>
+                                            Discount Amount <b>{(this.props.discountData && this.props.discountData.discount_amount) ? this.props.discountData.discount_amount : 0.00 }</b>
+                                        </Card.Text>
+                                        <Card.Text>
+                                            Total Amount : <b>{(this.props.discountData && this.props.discountData.total_amount) ? this.props.discountData.total_amount : 0.00 }</b>
+                                        </Card.Text>
+
+                                    </Card.Body>
+
+                                </Card>
+                            }
+                        </Col>
                     </Row>
 
-                </Container>
+
+
+                {/*</Container>*/}
 
                 <FooterComponent/>
             </>

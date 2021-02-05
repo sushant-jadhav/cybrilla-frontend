@@ -1,7 +1,7 @@
 import update from "react-addons-update";
 import constants from "./actionConstants";
 import request from "../../../../util/appRequest";
-import {addSelectedProduct} from "../../Cart/modules/cartScreen";
+import {addSelectedCartProduct} from "../../Cart/modules/cartScreen";
 
 //Constants
 const {
@@ -109,36 +109,31 @@ export function updateCounter(payload={}) {
 // }
 export function addToCartProduct(payload={}) {
     return (dispatch, store) => {
-        return (dispatch, store) => {
-            let request_url;
-            request_url = 'cart';
+        let request_url;
+        request_url = 'cart';
 
-            request.post(request_url, {
-                product_id:payload.product.product_id,
-                quantity:payload.product.quantity
-            })
-                .then(res => {
-                    console.log('addToCartProduct res',res);
-                    if (!res.data.success) {
-                        throw(res.data.err);
-                    }
-                    dispatch({
-                        type:HOME_SCREEN_PRODUCT,
-                        payload:{
-                            productsData:prodData
-                        }
-                    });
-                    // removeLoadingBlock();
-                }).catch(err => {
+        request.post(request_url, {
+            product_id:payload.product.id,
+            quantity:payload.product.quantity
+        })
+            .then(res => {
+                console.log('addToCartProduct res',res);
+                if (!res.data.success) {
+                    throw(res.data.err);
+                }
+                dispatch(addSelectedCartProduct({
+                    cart_id : res.data.data.id
+                }));
+
+            }).catch(err => {
                 console.log(err);
                 dispatch(homeScreenError({
                     err: 'Something went wrong',
                     errSeverity: 0
                 }));
-                // removeLoadingBlock();
-            });
-            return payload;
-        }
+            // removeLoadingBlock();
+        });
+        return payload;
     };
 }
 

@@ -51,8 +51,9 @@ export function cartScreenReset() {
 
 export function getCartProductsData(payload={}) {
     return (dispatch, store) => {
+        let cart_ids = store().cart.selectedProducts.join(',');
         let request_url;
-        request_url = 'cart/product?cart_ids='+payload.cart_ids;
+        request_url = 'cart/product?cart_ids='+cart_ids;
 
         request.get(request_url, {})
             .then(res => {
@@ -65,7 +66,8 @@ export function getCartProductsData(payload={}) {
                 dispatch({
                     type:CART_SCREEN_PRODUCT,
                     payload:{
-                        cartProducts:prodData
+                        cartProducts:prodData.cart_data,
+                        discountData:prodData.discount_data
                     }
                 });
                 // removeLoadingBlock();
@@ -93,17 +95,16 @@ export function updateCartCounter(payload={}) {
     };
 }
 
-export function getAllCartProducts(payload={}) {
+export function addSelectedCartProduct(payload={}) {
     return (dispatch, store) => {
-
-        // dispatch({
-        //     type:CART_SCREEN_PRODUCTS,
-        //     payload:{
-        //         index:payload.index,
-        //         quantity:payload.quantity
-        //     }
-        // })
-    };
+        dispatch({
+            type:CART_SCREEN_SELECT_PRODUCT,
+            payload:{
+                cart_id : payload.cart_id
+            }
+        });
+        dispatch(getCartProductsData());
+    }
 }
 
 export function addSelectedProduct(payload={}) {
@@ -147,7 +148,8 @@ export function redirectToLogIn() {
 
 function handleInitHomeScreen(state, action) {
     return update(state, {
-        // categoryData: { $set: [] }
+        cartProducts: { $set: [] },
+        discountData:{ $set : null}
     })
 }
 
@@ -180,6 +182,7 @@ function handleHomeScreenReset(state) {
 function handleHomeProducts(state,action) {
     return update(state, {
         cartProducts: { $set: action.payload.cartProducts },
+        discountData: { $set: action.payload.discountData },
     })
 }
 
@@ -190,21 +193,24 @@ function handleCartProduct(state,action) {
 }
 
 function handleSelectProduct(state,action) {
+    return update(state, {
+        selectedProducts: {$push: [action.payload.cart_id]},
+    });
 
-    if(action.payload.type ==='push') {
-        return update(state, {
-            selectedProducts: {$push: [action.payload.selectedProducts]},
-        });
-    }else{
-        let newOrderData = state.selectedProducts;
-        let cartProduct = newOrderData[action.payload.index];
-        cartProduct.quantity = action.payload.quantity;
-
-        return update(state, {
-            // orderProducts: {$set : newOrderData},
-            selectedProducts: {[action.payload.index]:{$set : cartProduct}},
-        });
-    }
+    // if(action.payload.type ==='push') {
+    //     return update(state, {
+    //         selectedProducts: {$push: [action.payload.selectedProducts]},
+    //     });
+    // }else{
+    //     let newOrderData = state.selectedProducts;
+    //     let cartProduct = newOrderData[action.payload.index];
+    //     cartProduct.quantity = action.payload.quantity;
+    //
+    //     return update(state, {
+    //         // orderProducts: {$set : newOrderData},
+    //         selectedProducts: {[action.payload.index]:{$set : cartProduct}},
+    //     });
+    // }
 
     // let selectProduct = [...state.selectedProducts, action.payload.selectedProducts];
     // return update(state, {

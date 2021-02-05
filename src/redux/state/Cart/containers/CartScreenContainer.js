@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import {
     addSelectedProduct,
-    addToCartProduct, getAllCartProducts, getCartProductsData,
+    addToCartProduct, getCartProductsData,
     getProductsData,
     initCartScreenComponent, updateCartCounter,
 } from '../modules/cartScreen';
@@ -19,8 +19,7 @@ const mapStateToProp = (state) => ({
 const mapActionCreators = {
     initCartScreenComponent,
     getCartProductsData,
-    updateCartCounter,
-    getAllCartProducts
+    updateCartCounter
 };
 
 export default connect(mapStateToProp, mapActionCreators)(CartComponent);
