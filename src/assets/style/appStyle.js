@@ -22,6 +22,10 @@ export const appStyle = {
         imageSize:{
             width:50,
             height:50
+        },
+        counterInput:{
+            display:'flex',
+            flexDirection:'row'
         }
     }
 

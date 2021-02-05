@@ -5,56 +5,7 @@ import {
     Route, Redirect
 } from "react-router-dom";
 
-import HomePageComponent from "../pages/Homepage/HomePageComponent";
-// import LoginContainer from "../redux/module/LoginScreen/containers/LoginContainer";
-// import TableScreenContainer from "../redux/module/TableScreen/containers/TableScreenContainer";
-// import TableOrderScreenContainer from "../redux/module/TableOrderScreen/containers/TableOrderScreenContainer";
-// import StaffLoginScreenContainer from "../redux/module/StaffLoginScreen/containers/StaffLoginScreenContainer";
-// import PaymentModeScreenContainer from "../redux/module/PaymentModeScreen/containers/PaymentModeScreenContainer";
-// import PaymentDetailsScreenContainer
-//     from "../redux/module/PaymentDetailsScreen/containers/PaymentDetailsScreenContainer";
-// import TableAssignScreenContainer from "../redux/module/TableAssignScreen/containers/TableAssignScreenContainer";
-
-// function PrivateRoute ({component: Component, authed, ...rest}) {
-//     const state = tableStore.getState();
-//     authed = state.tableLogin.isUserLogin;
-//     return (
-//         <Route
-//             {...rest}
-//             render={(props) => authed === true
-//                 ? <Component {...props} />
-//                 : <Redirect to={{pathname: '/login', state: {from: props.location}}} />}
-//         />
-//     )
-// }
-
-// function AuthRoute ({component: Component, ...rest}) {
-//     const state = tableStore.getState();
-//     console.log(state);
-//     let auth = state.tableLogin.isUserLogin;
-//     return (
-//         <Route
-//             {...rest}
-//             render={(props) => auth === true
-//                 ? <Redirect to={{pathname: '/table', state: {from: props.location}}} />
-//             : <LoginContainer {...props} />}
-//         />
-//     )
-// }
-
-// function VerifyRoute ({component: Component, authed, ...rest}) {
-//     const state = tableStore.getState();
-//     let auth = state.tableOrder.verifyPassCode;
-//     return (
-//         <Route
-//             {...rest}
-//             render={(props) => auth === null
-//                 ? <Redirect to={{pathname: '/table', state: {from: props.location}}} />
-//                 : <Component {...props} />}
-//         />
-//     )
-// }
-
+import HomeScreenContainer from "../redux/state/Home/containers/HomeScreenContainer";
 
 class Routes extends Component {
 
@@ -95,7 +46,11 @@ class Routes extends Component {
                             return <PaymentModeScreenContainer {...props} payment_request_id={props.match.params.payment_request_id}/>
                         }} exact={true}/> */}
 
-                        <HomePageComponent/>
+                        <Route exact path={'/'} render={(props) => {
+                            return <HomeScreenContainer {...props}/>
+                        }}/>
+
+                        {/*<HomePageComponent/>*/}
                     </Switch>
                 }
             </>

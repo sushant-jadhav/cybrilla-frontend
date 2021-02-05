@@ -1,3 +1,15 @@
 /*.product-card :last-child{*/
 /*    margin-bottom: 80px;*/
 /*}*/
+
+.counter-input .form-control {
+    /* your style */
+}
+/* to style buttons use */
+.counter-input .input-group-addon {
+    /* your style */
+    width: 50%;
+}
+.input-group.counter-input{
+    width: 50% !important;
+}
