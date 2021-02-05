@@ -1,5 +1,5 @@
 export function AppName(){
-    return "My Shop";
+    return "Cybrilla Coding Challenge";
 }
 
 export function appAxiosURL(){
@@ -19,12 +19,3 @@ export function getToken() {
 export function getAppAccessToken() {
     return localStorage.getItem('app_access_token') || '';
 }
-
-// export default AxiosRequest = {
-//     AppName,
-//     appAxiosURL,
-//     getToken,
-//     getAppAccessToken
-// };
-
-// export default AxiosRequest;

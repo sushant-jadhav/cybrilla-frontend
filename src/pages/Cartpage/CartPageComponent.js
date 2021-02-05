@@ -5,7 +5,7 @@ import {
     Container,
     Row,
     Col,
-    Navbar, Card
+    Navbar, Card, Alert
 } from 'react-bootstrap';
 import {appStyle} from "../../assets/style/appStyle";
 // import defImg from '../../../src/assets/image/defImg.jpg'
@@ -13,7 +13,7 @@ import CounterInput from 'react-bootstrap-counter';
 import FooterComponent from '../FooterComponent/FooterComponent';
 import HeaderComponent from "../HeaderComponent/HeaderComponent";
 
-class HomeComponent extends Component {
+class CartComponent extends Component {
 
     constructor(props) {
         super(props);
@@ -25,8 +25,8 @@ class HomeComponent extends Component {
     }
 
     componentDidMount() {
-        this.props.initHomeScreenComponent();
-        this.props.getProductsData();
+        this.props.initCartScreenComponent();
+        this.props.getCartProductsData();
     }
 
     componentWillReceiveProps(nextProps) {
@@ -51,14 +51,14 @@ class HomeComponent extends Component {
         return (
             <>
                 <HeaderComponent
-                    title={'Home'}
+                    title={'Cart'}
                 />
 
                 <Container>
 
                     <Row>
                         <Col style={{marginTop:10,marginBottom:80}}>
-                            {this.props.productsData.map((data,index)=>{
+                            {this.props.cartProducts.map((data,index)=>{
                                 return <Card style={{margin:10}} className={'product-card'} key={index}>
                                     {/*<Prompt message={location =>location.pathname.includes("/ProductDetail")?  `Are you sure you want to view the details ?` : true  } />*/}
                                     <Card.Body>
@@ -81,11 +81,7 @@ class HomeComponent extends Component {
                                                 }) } }
                                             />
                                             <Button variant="primary" onClick={()=>{
-                                                if(data.quantity>0) {
-                                                    this.props.addToCartProduct({product: data});
-                                                }else{
-                                                    alert('Please select quantity');
-                                                }
+                                               this.props.addToCartProduct({product_id:data.product_id});
                                             }}>Add</Button>
                                         </div>
 
@@ -93,6 +89,19 @@ class HomeComponent extends Component {
 
                                 </Card>
                             })}
+
+                            {this.props.cartProducts.length===0 && <Alert show={true} variant="success">
+                                <Alert.Heading>Your cart is empty!</Alert.Heading>
+                                <p>
+                                    No Product Found
+                                </p>
+                                <hr />
+                                <div className="d-flex justify-content-end">
+                                    <Button onClick={() => window.location.replace('/')} variant="outline-success">
+                                        Add Product
+                                    </Button>
+                                </div>
+                            </Alert>}
 
                         </Col>
                     </Row>
@@ -105,4 +114,4 @@ class HomeComponent extends Component {
     }
 }
 
-export default HomeComponent;
+export default CartComponent;

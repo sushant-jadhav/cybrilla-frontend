@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
 import {
+    addToCartProduct,
     getProductsData,
     initHomeScreenComponent, updateCounter,
 } from '../modules/homeScreen';
@@ -15,7 +16,8 @@ const mapStateToProp = (state) => ({
 const mapActionCreators = {
     initHomeScreenComponent,
     getProductsData,
-    updateCounter
+    updateCounter,
+    addToCartProduct
 };
 
 export default connect(mapStateToProp, mapActionCreators)(HomeComponent);

@@ -1,6 +1,7 @@
 import update from "react-addons-update";
 import constants from "./actionConstants";
 import request from "../../../../util/appRequest";
+import {addSelectedProduct} from "../../Cart/modules/cartScreen";
 
 //Constants
 const {
@@ -9,7 +10,8 @@ const {
     HOME_SCREEN_RESET,
     HOME_SCREEN_ERROR,
     HOME_SCREEN_PRODUCT,
-    HOME_SCREEN_UPDATE_COUNTER
+    HOME_SCREEN_UPDATE_COUNTER,
+    HOME_SCREEN_ADD_CART
 } = constants;
 
 //==============================
@@ -96,6 +98,47 @@ export function updateCounter(payload={}) {
                 quantity:payload.quantity
             }
         })
+    };
+}
+
+// export function addToCartProduct(payload={}) {
+//     return (dispatch, store) => {
+//         console.log('addToCartProduct payload',payload);
+//         dispatch(addSelectedProduct(payload));
+//     };
+// }
+export function addToCartProduct(payload={}) {
+    return (dispatch, store) => {
+        return (dispatch, store) => {
+            let request_url;
+            request_url = 'cart';
+
+            request.post(request_url, {
+                product_id:payload.product.product_id,
+                quantity:payload.product.quantity
+            })
+                .then(res => {
+                    console.log('addToCartProduct res',res);
+                    if (!res.data.success) {
+                        throw(res.data.err);
+                    }
+                    dispatch({
+                        type:HOME_SCREEN_PRODUCT,
+                        payload:{
+                            productsData:prodData
+                        }
+                    });
+                    // removeLoadingBlock();
+                }).catch(err => {
+                console.log(err);
+                dispatch(homeScreenError({
+                    err: 'Something went wrong',
+                    errSeverity: 0
+                }));
+                // removeLoadingBlock();
+            });
+            return payload;
+        }
     };
 }
 

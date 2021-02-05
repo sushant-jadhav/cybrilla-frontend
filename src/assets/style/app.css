@@ -13,3 +13,13 @@
 .input-group.counter-input{
     width: 50% !important;
 }
+
+a.link{
+    text-decoration: none;
+    color:black;
+}
+
+a.app-link{
+    text-decoration: none !important;
+    color:black !important;
+}

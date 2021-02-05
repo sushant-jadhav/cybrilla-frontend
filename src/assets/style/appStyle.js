@@ -26,6 +26,10 @@ export const appStyle = {
         counterInput:{
             display:'flex',
             flexDirection:'row'
+        },
+        aLink:{
+            textDecoration:'none',
+            color:'black'
         }
     }
 

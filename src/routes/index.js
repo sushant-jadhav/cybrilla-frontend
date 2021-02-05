@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 
 import HomeScreenContainer from "../redux/state/Home/containers/HomeScreenContainer";
+import CartScreenContainer from "../redux/state/Cart/containers/CartScreenContainer";
 
 class Routes extends Component {
 
@@ -48,6 +49,10 @@ class Routes extends Component {
 
                         <Route exact path={'/'} render={(props) => {
                             return <HomeScreenContainer {...props}/>
+                        }}/>
+
+                        <Route exact path={'/cart'} render={(props) => {
+                            return <CartScreenContainer {...props}/>
                         }}/>
 
                         {/*<HomePageComponent/>*/}
